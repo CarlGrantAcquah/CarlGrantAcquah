@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carl Grant-Acquah — AI Automation Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.15);
+  --accent: #E8440A;
+  --accent2: #FF6B35;
+  --text: #f0ede8;
+  --muted: #7a7670;
+  --tag-bg: rgba(232,68,10,0.12);
+  --tag-border: rgba(232,68,10,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NOISE TEXTURE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* GRID BACKGROUND */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(12px);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+/* SECTIONS */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 0 6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,68,10,0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid var(--tag-border);
+  background: var(--tag-bg);
+  padding: 6px 14px;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.35s;
+}
+
+.hero h1 .line2 {
+  color: var(--accent);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.5s;
+}
+
+.hero-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.65s;
+}
+
+.stack-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+
+.stack-pill:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.8s;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent2);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+/* STATS BAR */
+.stats-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+  background: var(--bg2);
+}
+
+.stats-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat {
+  padding: 0 2rem;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* SECTION HEADERS */
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.section-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* PORTFOLIO */
+.portfolio {
+  padding: 6rem 0;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.tool-card {
+  background: var(--bg);
+  padding: 2rem;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.tool-card:hover { background: var(--bg2); }
+.tool-card:hover::before { transform: scaleX(1); }
+
+.tool-card.featured {
+  grid-column: span 2;
+  background: var(--bg2);
+}
+
+.tool-card.featured::before { transform: scaleX(1); }
+
+.tool-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.tool-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.tool-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.status-live {
+  background: rgba(34,197,94,0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.2);
+}
+
+.status-active {
+  background: rgba(232,68,10,0.1);
+  color: var(--accent2);
+  border: 1px solid var(--tag-border);
+}
+
+.status-demo {
+  background: rgba(99,102,241,0.1);
+  color: #818cf8;
+  border: 1px solid rgba(99,102,241,0.2);
+}
+
+.status-hist {
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.tool-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.tool-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.tool-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.stack-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.tool-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+
+.tool-link:hover { gap: 10px; }
+
+/* FEATURED TOOL LAYOUT */
+.featured-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.featured-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+
+.featured-metric {
+  background: var(--bg3);
+  padding: 1rem;
+}
+
+.featured-metric-val {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.featured-metric-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ABOUT */
+.about {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-left {
+  position: sticky;
+  top: 6rem;
+}
+
+.about-img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  background: var(--bg3);
+}
+
+.about-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%);
+}
+
+.about-img-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(8,8,8,0.9));
+}
+
+.about-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.about-title-small {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+
+.about-body p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.about-body p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.about-body p:last-child { margin-bottom: 0; }
+
+.quote-block {
+  border-left: 2px solid var(--accent);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  background: var(--bg2);
+}
+
+.quote-block p {
+  font-style: italic;
+  color: var(--text) !important;
+  font-size: 1rem !important;
+}
+
+/* SKILLS */
+.skills {
+  padding: 4rem 0 6rem;
+  border-top: 1px solid var(--border);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.skill-cat {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+
+.skill-cat-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skill-item {
+  font-size: 14px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-item::before {
+  content: '→';
+  color: var(--accent);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* CONTACT */
+.contact {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.contact-left h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin-bottom: 1rem;
+}
+
+.contact-left h2 span { color: var(--accent); }
+
+.contact-left p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.contact-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  border: 1px solid var(--tag-border);
+  background: var(--tag-bg);
+  padding: 8px 14px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.contact-link:hover { background: var(--bg3); }
+
+.contact-link-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-link-platform {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.contact-link-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.contact-link-arrow {
+  color: var(--accent);
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.contact-link:hover .contact-link-arrow { transform: translateX(4px); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-left {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.footer-right span { color: var(--accent); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .container { padding: 0 1.25rem; }
+  .hero { padding: 7rem 0 4rem; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 1rem; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .tool-card.featured { grid-column: span 1; }
+  .featured-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .about-left { position: static; }
+  .about-img-wrap { aspect-ratio: 1/1; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Carl<span>.</span>GA</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">work</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#contact">contact</a></li>
+    <li><a href="https://github.com/CarlGrantAcquah" target="_blank">github</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-tag">Available for remote contracts & Canadian employer sponsorship</div>
+    <h1>
+      I build AI systems
+      <span class="line2">that do the work.</span>
+    </h1>
+    <p class="hero-sub">
+      AI automation specialist based in Accra, Ghana. I build production systems — RAG chatbots, Playwright automation bots, workflow orchestrators — that replace manual processes and generate measurable results.
+    </p>
+    <div class="hero-stack">
+      <span class="stack-pill">n8n</span>
+      <span class="stack-pill">Playwright</span>
+      <span class="stack-pill">Google Gemini</span>
+      <span class="stack-pill">Pinecone</span>
+      <span class="stack-pill">Make.com</span>
+      <span class="stack-pill">RAG Systems</span>
+      <span class="stack-pill">Voice AI</span>
+      <span class="stack-pill">Python</span>
+      <span class="stack-pill">JavaScript</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#portfolio" class="btn-primary">View My Work →</a>
+      <a href="https://linkedin.com/in/carl-grant-acquah" target="_blank" class="btn-secondary">Connect on LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">production tools built</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$1M+</div>
+        <div class="stat-label">revenue data analyzed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">automated operations</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">manual steps in daily ops</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// portfolio</span>
+      <h2 class="section-title">7 tools. All production-built.<br>All solving real problems.</h2>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- FEATURED -->
+      <div class="tool-card featured reveal">
+        <div class="featured-inner">
+          <div>
+            <div class="tool-top">
+              <span class="tool-num">01</span>
+              <span class="tool-status status-live">LIVE PRODUCT</span>
+            </div>
+            <div class="tool-name">ProDispatcher — Business Autonomy System</div>
+            <div class="tool-desc">
+              A complete AI automation system for HVAC and Plumbing business owners. Voice AI receptionist answers every inbound call 24/7. A 15-question audit engine scores businesses 0–100 and prescribes tiered solutions. Clients recover an average of $15,000 in month 1 from previously missed leads.
+            </div>
+            <div class="tool-stack">
+              <span class="stack-tag">Voice AI</span>
+              <span class="stack-tag">JavaScript</span>
+              <span class="stack-tag">CRM APIs</span>
+              <span class="stack-tag">Calendar Integration</span>
+              <span class="stack-tag">Vercel</span>
+            </div>
+            <a href="https://prodispatcher-website.vercel.app/home.html" target="_blank" class="tool-link">View live site →</a>
+          </div>
+          <div>
+            <div class="featured-metrics">
+              <div class="featured-metric">
+                <div class="featured-metric-val">95%+</div>
+                <div class="featured-metric-label">call answer rate</div>
+              </div>
+              <div class="featured-metric">
+                <div class="featured-metric-val">7 days</div>
+                <div class="featured-metric-label">to go live</div>
+              </div>
+              <div class="featured-metric">
+                <div class="featured-metric-val">90s</div>
+                <div class="featured-metric-label">lead capture time</div>
+              </div>
+              <div class="featured-metric">
+                <div class="featured-metric-val">$15K</div>
+                <div class="featured-metric-label">avg month 1 recovery</div>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+              <a href="https://prodispatcher-website.vercel.app/index.html" target="_blank" class="tool-link" style="margin-right: 1.5rem;">Take the audit →</a>
+              <a href="https://prodispatcher-website.vercel.app/calculator.html" target="_blank" class="tool-link">Revenue calculator →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 2 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">02</span>
+          <span class="tool-status status-demo">DEMO AVAILABLE</span>
+        </div>
+        <div class="tool-name">RAG Knowledge Base Chatbot</div>
+        <div class="tool-desc">
+          A production RAG system built in n8n that answers natural language questions from business documents in real time. Powered by Google Gemini embeddings (3072-dim) and Pinecone vector search. Returns structured JSON responses via webhook in under 5 seconds.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">n8n</span>
+          <span class="stack-tag">Gemini 2.5 Flash</span>
+          <span class="stack-tag">Pinecone</span>
+          <span class="stack-tag">Webhook API</span>
+          <span class="stack-tag">RAG</span>
+        </div>
+        <a href="https://github.com/CarlGrantAcquah/prodispatcher-rag-chatbot" target="_blank" class="tool-link">View on GitHub →</a>
+      </div>
+
+      <!-- TOOL 3 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">03</span>
+          <span class="tool-status status-active">ACTIVE — IN DEV</span>
+        </div>
+        <div class="tool-name">Master Business Orchestrator</div>
+        <div class="tool-desc">
+          A single terminal command that runs the entire daily business operation — content research, AI writing, social posting, audience engagement, and prospect outreach — without manual input. Phase 2 (bonus tasks) and Phase 3 (email outreach) in progress.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Playwright</span>
+          <span class="stack-tag">LLM APIs</span>
+          <span class="stack-tag">Shell Scripting</span>
+        </div>
+      </div>
+
+      <!-- TOOL 4 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">04</span>
+          <span class="tool-status status-active">ACTIVE</span>
+        </div>
+        <div class="tool-name">Playwright Humanized Social Bots</div>
+        <div class="tool-desc">
+          Browser automation bots that manage complete social media operations using real browser sessions. Operate with human-like timing, scroll patterns, and behavior to avoid detection. Running daily across content creation, engagement, and outreach workflows.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">Playwright</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Browser Automation</span>
+          <span class="stack-tag">Anti-Detection</span>
+        </div>
+      </div>
+
+      <!-- TOOL 5 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">05</span>
+          <span class="tool-status status-live">LIVE</span>
+        </div>
+        <div class="tool-name">Business Autonomy Audit Engine</div>
+        <div class="tool-desc">
+          A scored diagnostic tool evaluating businesses across Availability, Speed-to-Lead, and System Dependency. Scoring algorithm produces a 0–100 score, places the business in Crisis/Growth/Scale tier, and generates a personalized action plan.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">Scoring Algorithm</span>
+          <span class="stack-tag">Vercel</span>
+        </div>
+        <a href="https://prodispatcher-website.vercel.app/index.html" target="_blank" class="tool-link">Try the audit →</a>
+      </div>
+
+      <!-- TOOL 6 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">06</span>
+          <span class="tool-status status-live">LIVE</span>
+        </div>
+        <div class="tool-name">Revenue Leakage Calculator</div>
+        <div class="tool-desc">
+          Interactive calculator showing home service business owners the exact annual revenue lost to missed calls. Takes industry, job value, call volume, and missed call rate as inputs. Outputs a specific dollar figure with a path to recover it.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">Real-time Calc</span>
+          <span class="stack-tag">Vercel</span>
+        </div>
+        <a href="https://prodispatcher-website.vercel.app/calculator.html" target="_blank" class="tool-link">Try the calculator →</a>
+      </div>
+
+      <!-- TOOL 7 -->
+      <div class="tool-card reveal">
+        <div class="tool-top">
+          <span class="tool-num">07</span>
+          <span class="tool-status status-hist">HISTORICAL</span>
+        </div>
+        <div class="tool-name">Make.com Workflow Library</div>
+        <div class="tool-desc">
+          A collection of automation workflows built across client and personal projects — lead capture pipelines, Instagram scheduling, LinkedIn comment automation, email nurture sequences, landing page to CRM integrations, and form-triggered workflows.
+        </div>
+        <div class="tool-stack">
+          <span class="stack-tag">Make.com</span>
+          <span class="stack-tag">Webhooks</span>
+          <span class="stack-tag">REST APIs</span>
+          <span class="stack-tag">Email Platforms</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-left reveal">
+        <div class="about-img-wrap">
+          <img src="https://prodispatcher-website.vercel.app/carlspic.jpg" alt="Carl Grant-Acquah" />
+          <div class="about-img-overlay">
+            <div class="about-name">Carl Grant-Acquah</div>
+            <div class="about-title-small">AI AUTOMATION SPECIALIST · ACCRA, GHANA</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-body reveal">
+        <span class="section-tag">// about</span>
+        <h2 class="section-title" style="margin-bottom: 1.75rem;">The builder behind<br>the systems.</h2>
+        <p>I don't just connect APIs. I build <strong>complete systems</strong> that replace entire manual workflows — from lead capture and customer communication to content creation, social engagement, and daily business operations.</p>
+        <p>My flagship project, <strong>ProDispatcher</strong>, is a live AI automation system for HVAC and Plumbing businesses. It runs a voice AI receptionist, scores businesses through an audit engine, and has helped clients recover tens of thousands in previously lost revenue — all built from scratch.</p>
+        <div class="quote-block">
+          <p>"I stopped building websites when I realized most businesses don't need a new site — they need a system to capture the leads they're already paying for."</p>
+        </div>
+        <p>My current focus: completing the Master Business Orchestrator — a single-command system that runs ProDispatcher's entire daily operation without manual input. I build automation that actually runs in production, not just demos.</p>
+        <p style="margin-top: 1.5rem;">
+          <a href="https://calendly.com/acquahgrantcarl/30min" target="_blank" class="btn-primary" style="display: inline-flex;">Book a strategy call →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// skills</span>
+      <h2 class="section-title">What I work with.</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cat">
+        <div class="skill-cat-title">WORKFLOW AUTOMATION</div>
+        <div class="skill-list">
+          <div class="skill-item">n8n (workflow orchestration)</div>
+          <div class="skill-item">Make.com</div>
+          <div class="skill-item">Webhook & REST API integration</div>
+          <div class="skill-item">Multi-step pipeline design</div>
+          <div class="skill-item">Error handling & monitoring</div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">AI & LLMs</div>
+        <div class="skill-list">
+          <div class="skill-item">RAG system architecture</div>
+          <div class="skill-item">Google Gemini (embed + LLM)</div>
+          <div class="skill-item">Pinecone vector database</div>
+          <div class="skill-item">Prompt engineering</div>
+          <div class="skill-item">LLM API integration</div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">BROWSER AUTOMATION</div>
+        <div class="skill-list">
+          <div class="skill-item">Playwright (Python)</div>
+          <div class="skill-item">Humanized bot patterns</div>
+          <div class="skill-item">Anti-detection techniques</div>
+          <div class="skill-item">Social platform automation</div>
+          <div class="skill-item">Session management</div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">FRONTEND & DEPLOYMENT</div>
+        <div class="skill-list">
+          <div class="skill-item">JavaScript & HTML/CSS</div>
+          <div class="skill-item">Vercel deployment</div>
+          <div class="skill-item">GitHub Pages</div>
+          <div class="skill-item">Landing page systems</div>
+          <div class="skill-item">Form & CRM integration</div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">BUSINESS SYSTEMS</div>
+        <div class="skill-list">
+          <div class="skill-item">Voice AI receptionist setup</div>
+          <div class="skill-item">CRM integration & sync</div>
+          <div class="skill-item">Calendar API automation</div>
+          <div class="skill-item">Lead capture pipelines</div>
+          <div class="skill-item">Revenue tracking systems</div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">CURRENTLY BUILDING</div>
+        <div class="skill-list">
+          <div class="skill-item">Email outreach automation</div>
+          <div class="skill-item">Client delivery systems</div>
+          <div class="skill-item">Service fulfillment SOPs</div>
+          <div class="skill-item">Multi-platform content engine</div>
+          <div class="skill-item">AI chat widget (website embed)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <h2>Let's build <span>something.</span></h2>
+        <p>Open to remote contracts, full-time AI automation roles, and Canadian employer sponsorship through the Global Talent Stream. If you have a manual process that should be automated — that is exactly what I do.</p>
+        <div class="contact-note">↗ Available for Global Talent Stream sponsorship</div>
+      </div>
+      <div class="contact-links reveal">
+        <a href="https://linkedin.com/in/carl-grant-acquah" target="_blank" class="contact-link">
+          <div class="contact-link-left">
+            <span class="contact-link-platform">LINKEDIN</span>
+            <span class="contact-link-value">linkedin.com/in/carl-grant-acquah</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="mailto:carlgrantacquah@gmail.com" class="contact-link">
+          <div class="contact-link-left">
+            <span class="contact-link-platform">EMAIL</span>
+            <span class="contact-link-value">carlgrantacquah@gmail.com</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://github.com/CarlGrantAcquah" target="_blank" class="contact-link">
+          <div class="contact-link-left">
+            <span class="contact-link-platform">GITHUB</span>
+            <span class="contact-link-value">github.com/CarlGrantAcquah</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://calendly.com/acquahgrantcarl/30min" target="_blank" class="contact-link">
+          <div class="contact-link-left">
+            <span class="contact-link-platform">BOOK A CALL</span>
+            <span class="contact-link-value">calendly.com/acquahgrantcarl/30min</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2026 Carl Grant-Acquah. All systems running.</div>
+  <div class="footer-right">Built with <span>purpose</span> · Accra, Ghana</div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
